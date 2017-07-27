@@ -1,7 +1,7 @@
 /**
  * Copyright (C) 2016 The DirtyUnicorns Project
  * Copyright (C) 2015 The CyanogenMod Project
- * 
+ *
  * @author: Randall Rushing <randall.rushing@gmail.com>
  *
  * Contributions from The CyanogenMod Project
@@ -44,7 +44,7 @@ import com.android.systemui.navigation.smartbar.SmartBarView;
 import com.android.systemui.navigation.smartbar.SmartButtonView;
 import com.android.systemui.navigation.editor.ActionItem;
 import com.android.systemui.navigation.editor.QuickAction;
-
+import com.android.systemui.R;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
@@ -103,6 +103,7 @@ public class SmartBarEditor extends BaseEditor implements View.OnTouchListener {
     private boolean mIsButtonMoving;
     // true == we're currently checking for long press
     private boolean mLongPressed;
+
     // start point of the current drag operation
     private float mDragOrigin;
     // just to avoid reallocations
@@ -583,11 +584,12 @@ public class SmartBarEditor extends BaseEditor implements View.OnTouchListener {
         boolean hasMaxButtons = getHasMaxButtons();
         String tag = getEditButtonTag();
         ActionItem item;
+        boolean hasNavBarByDefault = mContext.getResources().getBoolean(com.android.internal.R.bool.config_showNavigationBar);
         if (type == POPUP_TYPE_TAP) {
             for (int i = 1; i < mTapMenuItems.size() + 1; i++) {
                 item = mTapMenuItems.get(i);
                 int id = item.getActionId();
-                if (id == MENU_MAP_ACTIONS_SINGLE_TAP &&
+                if (id == MENU_MAP_ACTIONS_SINGLE_TAP && hasNavBarByDefault &&
                         (tag.equals(BACK) || tag.equals(HOME))) {
                     continue;
                 }
@@ -609,7 +611,7 @@ public class SmartBarEditor extends BaseEditor implements View.OnTouchListener {
                 if (id == MENU_MAP_ADD && hasMaxButtons) {
                     continue;
                 }
-                if (id == MENU_MAP_REMOVE &&
+                if (id == MENU_MAP_REMOVE && hasNavBarByDefault &&
                         (tag.equals(BACK) || tag.equals(HOME))) {
                     continue;
                 }
@@ -780,7 +782,7 @@ public class SmartBarEditor extends BaseEditor implements View.OnTouchListener {
 
     /**
      * Find intersecting view in mButtonViews
-     * 
+     *
      * @param pos - pointer location
      * @param v - view being dragged
      * @return intersecting view or null
@@ -810,7 +812,7 @@ public class SmartBarEditor extends BaseEditor implements View.OnTouchListener {
 
     /**
      * Switches positions of two views and updates their mButtonViews entry
-     * 
+     *
      * @param targetView - view to be replaced animate out
      * @param view - view being dragged
      */
