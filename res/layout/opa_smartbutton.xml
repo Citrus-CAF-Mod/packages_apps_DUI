@@ -33,6 +33,8 @@
         android:id="@+id/smartbutton"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="center" />
+        android:scaleType="fitCenter"
+	android:paddingTop="15dp"
+        android:paddingBottom="15dp" />
 
 </com.android.systemui.navigation.OpaLayout>
